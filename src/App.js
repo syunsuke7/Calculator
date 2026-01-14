@@ -44,11 +44,11 @@ export function App() {
   }
   
   const onKeisanClick = (shiki) => {
-    const newKeisanNum = num + shiki;
     setNum((prevNum) => {
       if (prevNum.includes("=") || prevNum === ""){
         return "";
       }else{
+        const newKeisanNum = num + shiki;
         return newKeisanNum;
       }
     })
@@ -56,14 +56,21 @@ export function App() {
       if (prevKeisanNum.includes("=") || prevKeisanNum === ""){
         return "";
       }else{
+        const newKeisanNum = num + shiki;
         return newKeisanNum;
       }
     })
   }
 
   const onTotalClick = () => {
-    if(keisanShiki.includes(keisanNum.slice(-1))){
+    if(keisanNum.includes("=") && keisanShiki.includes(keisanNum.slice(-1))){
+      setNum("");
+      setKeisanNum("");
+      return;
+    }else if(keisanShiki.includes(keisanNum.slice(-1))){
       return setNum(keisanNum + " = エラー" );
+    }else if(keisanNum === ""){
+      return setNum("0 = 0");
     }
     const newTotalNum = eval(keisanNum);
     setNum(keisanNum + " = " + newTotalNum);
